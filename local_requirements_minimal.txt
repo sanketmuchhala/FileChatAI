@@ -1,0 +1,7 @@
+# Minimal requirements that work with Python 3.8+
+streamlit
+google-generativeai
+openai
+numpy
+PyPDF2
+python-docx
