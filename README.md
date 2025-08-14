@@ -111,7 +111,7 @@ The application will open in your default web browser at `http://localhost:8501`
 
 You can also deploy this application to Railway for easy cloud hosting:
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://filechatai-production.up.railway.app/)
+[![Deploy on Railway](https://filechatai-production.up.railway.app/)
 
 ### Railway Deployment Steps:
 
