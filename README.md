@@ -131,6 +131,127 @@ DEEPSEEK_API_KEY=your_deepseek_api_key_here
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
+## Application Architecture
+
+```mermaid
+flowchart TD
+    A[User Uploads Document] --> B{Document Type?}
+    B -->|PDF| C[DocumentProcessor.extract_from_pdf]
+    B -->|TXT| D[DocumentProcessor.extract_from_txt]
+    B -->|DOCX| E[DocumentProcessor.extract_from_docx]
+    
+    C --> F[Extract Text Content]
+    D --> F
+    E --> F
+    
+    F --> G{Text Content Valid?}
+    G -->|No| H[Error: No Content Found]
+    G -->|Yes| I[DocumentProcessor.chunk_text]
+    
+    I --> J[Create Text Chunks]
+    J --> K[VectorStore.add_documents]
+    
+    K --> L[Google Gemini API]
+    L --> M[Generate Embeddings]
+    M --> N[Store in Vector Store]
+    
+    N --> O[Initialize ChatHandler]
+    O --> P[Document Ready for Chat]
+    
+    P --> Q[User Asks Question]
+    Q --> R[ChatHandler.generate_response]
+    
+    R --> S[VectorStore.similarity_search]
+    S --> T[Google Gemini API]
+    T --> U[Query Embedding]
+    U --> V[Calculate Cosine Similarity]
+    V --> W[Retrieve Top-K Chunks]
+    
+    W --> X[DeepSeek API]
+    X --> Y[Generate Context-Aware Response]
+    Y --> Z[Return Response + Sources]
+    
+    Z --> AA[Display in Chat Interface]
+    AA --> Q
+    
+    %% API Key Validation
+    BB[Check API Keys] --> CC{DEEPSEEK_API_KEY?}
+    CC -->|Missing| DD[Error: Missing DeepSeek Key]
+    CC -->|Present| EE{GEMINI_API_KEY?}
+    EE -->|Missing| FF[Error: Missing Gemini Key]
+    EE -->|Present| A
+    
+    %% Error Handling
+    H --> GG[Show Error Message]
+    DD --> GG
+    FF --> GG
+    
+    %% Styling
+    classDef apiBox fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef processBox fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef errorBox fill:#ffebee,stroke:#c62828,stroke-width:2px
+    classDef userBox fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    
+    class L,T,X apiBox
+    class C,D,E,F,I,J,K,M,N,O,R,S,U,V,W,Y,Z processBox
+    class H,DD,FF,GG errorBox
+    class A,Q,AA,P userBox
+```
+
+## System Components
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        A[Streamlit App<br/>app.py]
+    end
+    
+    subgraph "Processing Layer"
+        B[Document Processor<br/>document_processor.py]
+        C[Vector Store<br/>vector_store.py]
+        D[Chat Handler<br/>chat_handler.py]
+    end
+    
+    subgraph "External APIs"
+        E[Google Gemini API<br/>Embeddings]
+        F[DeepSeek API<br/>Chat Completions]
+    end
+    
+    subgraph "Data Flow"
+        G[PDF/TXT/DOCX Files]
+        H[Text Chunks]
+        I[Embeddings]
+        J[Similarity Search]
+        K[Context-Aware Responses]
+    end
+    
+    A --> B
+    A --> C
+    A --> D
+    B --> E
+    C --> E
+    D --> F
+    
+    G --> B
+    B --> H
+    H --> C
+    C --> I
+    I --> J
+    J --> D
+    D --> K
+    
+    %% Styling
+    classDef frontend fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef processing fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef api fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+    classDef data fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class A frontend
+    class B,C,D processing
+    class E,F api
+    class G,H,I,J,K data
+```
+
 ## How to Use
 
 1. **Upload Document**: Use the sidebar to upload a PDF, TXT, or DOCX file
