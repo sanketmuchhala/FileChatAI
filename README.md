@@ -107,6 +107,30 @@ python run_local.py
 
 The application will open in your default web browser at `http://localhost:8501`
 
+## Railway Deployment
+
+You can also deploy this application to Railway for easy cloud hosting:
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://filechatai-production.up.railway.app/)
+
+### Railway Deployment Steps:
+
+1. **Fork this repository** to your GitHub account
+2. **Click the Railway deploy button** above or visit [Railway](https://railway.app)
+3. **Connect your GitHub account** and select this repository
+4. **Set environment variables** in Railway dashboard:
+   - `DEEPSEEK_API_KEY`: Your DeepSeek API key
+   - `GEMINI_API_KEY`: Your Google Gemini API key
+5. **Deploy** - Railway will automatically build and deploy your application
+6. **Access your app** at the provided Railway URL
+
+### Railway Environment Variables:
+Make sure to set these in your Railway project settings:
+```
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
 ## How to Use
 
 1. **Upload Document**: Use the sidebar to upload a PDF, TXT, or DOCX file
