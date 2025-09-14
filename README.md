@@ -2,6 +2,11 @@
 
 A Streamlit-based RAG (Retrieval-Augmented Generation) chatbot that allows you to upload documents and have intelligent conversations about their content using DeepSeek AI and Google Gemini embeddings.
 
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 1 37 20 AM" src="https://github.com/user-attachments/assets/e532a505-cf9f-43de-baa7-2aaf3a193ccd" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 1 37 28 AM" src="https://github.com/user-attachments/assets/6f862d02-6629-4b2f-9722-c83bbdcaea23" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 1 38 36 AM" src="https://github.com/user-attachments/assets/9a3e0a9d-9e02-435a-8dda-01bfb8d34e88" />
+
+
 ## Features
 
 - Support for PDF, TXT, and DOCX documents
